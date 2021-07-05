@@ -19,7 +19,7 @@ export default defineConfig({
 // main.ts
 
 // Your dynamic cdn
-const dynamicCdn = oneOf(['cdn.xxx.com', 'cdn1.xxx.com'];
+const dynamicCdn = oneOf(['cdn.xxx.com', 'cdn1.xxx.com']);
 window.__dynamicImportHandler__ = function(importer) {
     return dynamicCdn + importer;
 }
