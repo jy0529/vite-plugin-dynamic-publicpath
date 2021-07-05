@@ -50,7 +50,7 @@ Register dynamic import preload handler
 
 ### `assetsBase`
 
-Type: `string`
+Type: `string`<br>
 Default: `assets`
 
 Custom the assets directory.
