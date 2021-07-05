@@ -1,5 +1,8 @@
 # vite-plugin-dynamic-publicpath
 
+## Why
+Use dynamic public path like webpack's `__webpack_public_path__`.
+
 ## Usage
 
 - run `yarn add vite-plugin-dynamic-publicpath --dev`
