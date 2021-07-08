@@ -17,15 +17,24 @@ export function useDynamicPublicPath(options?: Options): Plugin {
         dynamicImportPreload,
         assetsBase,
     } = options;
+    
     return {
         name: 'vite-plugin-dynamic-publicpath',
         enforce: 'post',
         apply: 'build',
-        renderDynamicImport() {
-            return {
-                left: `import("__PUBLIC_PATH_FLAG__ + (${dynamicImportHanlder} || function(importer) { return importer; })(`,
-                right: ') + __PUBLIC_PATH_FLAG__" )'
+        renderDynamicImport({ format }) {
+            if (format === 'es') {
+                return {
+                    left: `import("__PUBLIC_PATH_MARKER__ + (${dynamicImportHanlder} || function(importer) { return importer; })(`,
+                    right: ') + __PUBLIC_PATH_MARKER__" )'
+                };
+            } else if (format === 'system') {
+                return {
+                    left: `module.import((${dynamicImportHanlder} || function(importer) { return importer; })(`,
+                    right: '))'
+                };
             }
+            return null;
         },
         generateBundle({ format }, bundle) {
             if (format !== 'es') {
@@ -36,7 +45,7 @@ export function useDynamicPublicPath(options?: Options): Plugin {
             for (const file in bundle) {
                 const chunk = bundle[file];
                 if (chunk.type === 'chunk' && chunk.code.indexOf(preloadMarker) > -1) {
-                    const code = chunk.code.replace(/__PUBLIC_PATH_FLAG__/g, '"');
+                    const code = chunk.code.replace(/__PUBLIC_PATH_MARKER__/g, '"');
                     let imports: ImportSpecifier[];
                     try {
                         imports = parseImports(code)[0].filter((i) => i.d > -1)
@@ -58,7 +67,7 @@ export function useDynamicPublicPath(options?: Options): Plugin {
                             }
                         }
                     }
-                    chunk.code = chunk.code.replace(/__PUBLIC_PATH_FLAG__/g, '"');
+                    chunk.code = chunk.code.replace(/__PUBLIC_PATH_MARKER__/g, '"');
                     chunk.code = chunk.code.replace(preloadMarkerRE, `(${dynamicImportPreload} || function(importer) { return importer; })((${preloadMarker}))`);
                 }
             }

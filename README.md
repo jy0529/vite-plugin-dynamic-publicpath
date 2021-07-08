@@ -17,6 +17,8 @@ export default defineConfig({
   ]
 })
 ```
+e.g. [basic demo](https://github.com/jy0529/vite-plugin-dynamic-publicpath/tree/main/examples/dynamic-publicpath-demo)
+
 
 ```ts
 // main.ts
@@ -29,6 +31,28 @@ window.__dynamicImportHandler__ = function(importer) {
 window.__dynamicImportPreload__ = function(preloads) {
     return preloads.map(preload => dynamicCdn + preload);
 }
+
+```
+### For legacy browser
+e.g. [legacy browser demo](https://github.com/jy0529/vite-plugin-dynamic-publicpath/tree/main/examples/legacy-demo)
+```ts
+// vite.config.ts
+
+import legacy from '@vitejs/plugin-legacy'
+import { useDynamicPublicPath } from '../../dist/index'
+export default defineConfig({
+  plugins: [
+    // See https://github.com/vitejs/vite/tree/main/packages/plugin-legacy
+    legacy({
+      targets: ['defaults', 'not ie <= 8'] 
+    }),
+    /** Attention! The legacy plugin must before loaded than dynamic-publicpath plugin */
+    useDynamicPublicPath({
+      dynamicImportHanlder: 'window.__dynamic_handler__',
+      dynamicImportPreload: 'window.__dynamic_preload__'
+    }),
+  ]
+})
 
 ```
 
