@@ -25,8 +25,8 @@ export function useDynamicPublicPath(options?: Options): Plugin {
         renderDynamicImport({ format }) {
             if (format === 'es') {
                 return {
-                    left: `import("__PUBLIC_PATH_MARKER__ + (${dynamicImportHanlder} || function(importer) { return importer; })(`,
-                    right: ') + __PUBLIC_PATH_MARKER__" )'
+                    left: `import("__PUBLIC_PATH_MARKER__" + (${dynamicImportHanlder} || function(importer) { return importer; })(`,
+                    right: ') + "__PUBLIC_PATH_MARKER__" )'
                 };
             } else if (format === 'system') {
                 return {
@@ -45,7 +45,7 @@ export function useDynamicPublicPath(options?: Options): Plugin {
             for (const file in bundle) {
                 const chunk = bundle[file];
                 if (chunk.type === 'chunk' && chunk.code.indexOf(preloadMarker) > -1) {
-                    const code = chunk.code.replace(/__PUBLIC_PATH_MARKER__/g, '"');
+                    const code = chunk.code.replace(/"__PUBLIC_PATH_MARKER__"/g, '""');
                     let imports: ImportSpecifier[];
                     try {
                         imports = parseImports(code)[0].filter((i) => i.d > -1)
@@ -67,7 +67,7 @@ export function useDynamicPublicPath(options?: Options): Plugin {
                             }
                         }
                     }
-                    chunk.code = chunk.code.replace(/__PUBLIC_PATH_MARKER__/g, '"');
+                    chunk.code = chunk.code.replace(/"__PUBLIC_PATH_MARKER__"/g, '""');
                     chunk.code = chunk.code.replace(preloadMarkerRE, `(${dynamicImportPreload} || function(importer) { return importer; })((${preloadMarker}))`);
                 }
             }
