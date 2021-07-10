@@ -1,7 +1,7 @@
 # vite-plugin-dynamic-publicpath
 
 ## Why
-Use dynamic import handler changed base path like webpack's `__webpack_public_path__`.
+Use dynamic import handler to change runtime public base path, like webpack's `__webpack_public_path__`.
 
 ## Usage
 
