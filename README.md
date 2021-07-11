@@ -39,10 +39,12 @@ e.g. [legacy browser demo](https://github.com/jy0529/vite-plugin-dynamic-publicp
 // vite.config.ts
 
 import legacy from '@vitejs/plugin-legacy'
-import { useDynamicPublicPath } from '../../dist/index'
+import { useDynamicPublicPath } from 'vite-plugin-dynamic-publicpath'
 export default defineConfig({
   plugins: [
-    // See https://github.com/vitejs/vite/tree/main/packages/plugin-legacy
+    /**
+     * @see https://github.com/vitejs/vite/tree/main/packages/plugin-legacy
+     * /
     legacy({
       targets: ['defaults', 'not ie <= 8'] 
     }),
@@ -60,14 +62,14 @@ export default defineConfig({
 
 ### `dynamicImportHanlder`
 
-Type: `Function`<br>
+Type: `string`<br>
 Default: `window.__dynamicImportHandler__`
 
 Register dynamic import handler
 
 ### `dynamicImportPreload`
 
-Type: `Function`<br>
+Type: `string`<br>
 Default: `window.__dynamicImportPreload__`
 
 Register dynamic import preload handler
