@@ -2,10 +2,11 @@ import path from 'path';
 import { parse as parseImports, ImportSpecifier } from 'es-module-lexer'
 import { normalizePath, Plugin } from 'vite';
 import { Options } from '../index';
+import { DEPRECATION_WARNING } from './text-utils';
 
 export function useDynamicPublicPath(options?: Options): Plugin {
     const _defaultOptions : Options = {
-        dynamicImportHanlder: 'window.__dynamicImportHandler__',
+        dynamicImportHandler: 'window.__dynamicImportHandler__',
         dynamicImportPreload: 'window.__dynamicImportPreload__',
         assetsBase: 'assets',
     }
@@ -14,9 +15,15 @@ export function useDynamicPublicPath(options?: Options): Plugin {
 
     const {
         dynamicImportHanlder,
+        dynamicImportHandler,
         dynamicImportPreload,
         assetsBase,
     } = options;
+
+    const dynamicImportHandlerFinal = dynamicImportHandler || dynamicImportHanlder;
+    if (!!dynamicImportHanlder) {
+        console.warn(DEPRECATION_WARNING);
+    }
     
     return {
         name: 'vite-plugin-dynamic-publicpath',
@@ -25,12 +32,12 @@ export function useDynamicPublicPath(options?: Options): Plugin {
         renderDynamicImport({ format }) {
             if (format === 'es') {
                 return {
-                    left: `import("__PUBLIC_PATH_MARKER__" + (${dynamicImportHanlder} || function(importer) { return importer; })(`,
+                    left: `import("__PUBLIC_PATH_MARKER__" + (${dynamicImportHandlerFinal} || function(importer) { return importer; })(`,
                     right: ') + "__PUBLIC_PATH_MARKER__" )'
                 };
             } else if (format === 'system') {
                 return {
-                    left: `module.import((${dynamicImportHanlder} || function(importer) { return importer; })(`,
+                    left: `module.import((${dynamicImportHandlerFinal} || function(importer) { return importer; })(`,
                     right: '))'
                 };
             }

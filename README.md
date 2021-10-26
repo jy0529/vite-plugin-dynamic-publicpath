@@ -50,7 +50,7 @@ export default defineConfig({
     }),
     /** Attention! The legacy plugin must before loaded than dynamic-publicpath plugin */
     useDynamicPublicPath({
-      dynamicImportHanlder: 'window.__dynamic_handler__',
+      dynamicImportHandler: 'window.__dynamic_handler__',
       dynamicImportPreload: 'window.__dynamic_preload__'
     }),
   ]
