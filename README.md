@@ -60,7 +60,7 @@ export default defineConfig({
 
 ## [Options](https://github.com/jy0529/vite-plugin-dynamic-publicpath/blob/main/index.d.ts)
 
-### `dynamicImportHanlder`
+### `dynamicImportHandler`
 
 Type: `string`<br>
 Default: `window.__dynamicImportHandler__`
