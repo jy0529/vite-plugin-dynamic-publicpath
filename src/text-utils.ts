@@ -1,8 +1,8 @@
-const BOLD="\033[1m";
-const GREEN = "\033[32m";
-const RED = "\033[31m";
-const YELLOW = "\033[33m";
-const RESET = "\033[0m";
+const BOLD="\x1B[1m";
+const GREEN = "\x1B[32m";
+const RED = "\x1B[31m";
+const YELLOW = "\x1B[33m";
+const RESET = "\x1B[0m";
 
 export const DEPRECATION_WARNING = `
  ⚠️  ${BOLD}${YELLOW}DEPRECATION WARNING${RESET} ⚠️ 
