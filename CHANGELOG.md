@@ -1,3 +1,12 @@
+# [1.1.0](https://github.com/jy0529/vite-plugin-dynamic-publicpath/compare/v1.0.2...v1.1.0) (2021-11-05)
+
+
+### Bug Fixes
+
+* legacy octal escape sequences cannot be used in strict mode ([df5edc8](https://github.com/jy0529/vite-plugin-dynamic-publicpath/commit/df5edc8ab7fa0075c99d3bd1245bcfffe34bf92f))
+
+
+
 ## [1.0.2](https://github.com/jy0529/vite-plugin-dynamic-publicpath/compare/v1.0.1...v1.0.2) (2021-07-09)
 
 
