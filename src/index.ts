@@ -56,7 +56,7 @@ export function useDynamicPublicPath(options?: Options): Plugin {
                     let imports: ImportSpecifier[];
                     try {
                         imports = parseImports(code)[0].filter((i) => i.d > -1)
-                    } catch (e) {
+                    } catch (e: any) {
                         this.error(e, e.idx);
                     }
                     if (imports.length) {
