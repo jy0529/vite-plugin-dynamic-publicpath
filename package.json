@@ -10,7 +10,8 @@
     "prepublishOnly": "yarn build"
   },
   "files": [
-    "dist"
+    "dist",
+    "index.d.ts"
   ],
   "repository": {
     "type": "git",
