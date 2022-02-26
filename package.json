@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-dynamic-publicpath",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A vite plugin for dynamic publicpath, like __webpack_public_path__",
   "main": "dist/index.js",
   "scripts": {
