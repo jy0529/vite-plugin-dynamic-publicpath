@@ -70,7 +70,13 @@ export function useDynamicPublicPath(options?: Options): Plugin {
                             const importerResult = url.match(/\(['"]([\s\S]+)['"]\)/);
                             if (importerResult instanceof Array && importerResult.length > 1) {
                                 const assetKey = normalizePath(path.join(`${assetsBase}`, importerResult[1]));
-                                bundle[normalizedFile] = bundle[assetKey];
+                                if (bundle[assetKey]) {
+                                    bundle[normalizedFile] = bundle[assetKey];   
+                                } else {
+                                    const assetFile = assetKey.split('/')
+                                    const key = Object.keys(bundle).find(k => k.endsWith(assetFile[assetFile.length - 1]))
+                                    bundle[normalizedFile] = bundle[key]
+                                }
                             }
                         }
                     }
